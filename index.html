@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>和好页面</title>
+    <style>
+        body {
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        #gif {
+            width: 200px;
+            height: 200px;
+        }
+        #text {
+            margin: 20px 0;
+            font-size: 24px;
+            color: white;
+        }
+        #buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        #buttonA {
+            background-color: rgb(223, 87, 155);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 10px; /* 圆角 */
+            transition: all 0.3s ease; /* 平滑过渡 */
+            flex-shrink: 0; /* 防止按钮缩小 */
+        }
+        #buttonB {
+            background-color: rgb(40, 129, 231);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 10px; /* 圆角 */
+            transition: all 0.3s ease; /* 平滑过渡 */
+            
+        }
+    </style>
+</head>
+<body>
+    <img id="gif" src="1.gif" alt="表情包">
+    <div id="text">可以和我和好吗</div>
+    <div id="buttons">
+        <button id="buttonA">和好</button>
+        <button id="buttonB">不要</button>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let currentIndex = 0; // 当前表情包索引
+
+        // 表情包数组
+        const gifs = [
+            "1.gif",
+            "2.gif",
+            "3.gif",
+            "4.gif",
+            "5.gif"
+        ];
+
+        // 获取表情包元素
+        const gifElement = document.getElementById('gif');
+
+        // 按顺序切换表情包
+        function changeGif() {
+            currentIndex = (currentIndex + 1) % gifs.length; // 切换到下一个表情包
+            gifElement.src = gifs[currentIndex]; // 更新表情包
+        }
+
+        // 按钮B的点击事件
+        document.getElementById('buttonB').addEventListener('click', function() {
+            const buttonA = document.getElementById('buttonA');
+            const buttonB = document.getElementById('buttonB');
+
+            // 红色按钮变大（增加宽度和高度）
+            const currentWidthA = parseFloat(window.getComputedStyle(buttonA).width);
+            const currentHeightA = parseFloat(window.getComputedStyle(buttonA).height);
+            buttonA.style.width = (currentWidthA + 40) + 'px'; // 宽度增加
+            buttonA.style.height = (currentHeightA + 20) + 'px'; // 高度增加
+
+            // 蓝色按钮右移（大小不变）
+            const currentMarginLeft = parseFloat(window.getComputedStyle(buttonB).marginLeft);
+            buttonB.style.marginLeft = (currentMarginLeft + 20) + 'px';
+
+            // 蓝色按钮文字变化
+            const buttonBTexts = ["对不起，窝知道错了", "陪你玩熊熊精英", "不许再点了", "和好"];
+            buttonB.textContent = buttonBTexts[clickCount % buttonBTexts.length];
+
+            clickCount++;
+
+            // 点击五次后跳转到新网页
+            if (clickCount >= 5) {
+                window.location.href = 'new-page.html';
+            }
+
+            // 每次点击后切换表情包
+            changeGif();
+        });
+
+        // 按钮A的点击事件
+        document.getElementById('buttonA').addEventListener('click', function() {
+            // 点击红色按钮跳转到新网页
+            window.location.href = 'new-page.html';
+
+            // 每次点击后切换表情包
+            changeGif();
+        });
+    </script>
+</body>
+</html>
